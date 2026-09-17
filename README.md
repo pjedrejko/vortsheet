@@ -1,4 +1,4 @@
-# vortRing
+# vortsheet
 
 Simulation of axisymmetric, buoyant vortex ring formation from an initial, uniform buoyancy anomaly in the $\mathrm{Re} \to \infty$ and $\mathrm{Pe} \to \infty$ limit.
 
@@ -32,7 +32,7 @@ Simulation of axisymmetric, buoyant vortex ring formation from an initial, unifo
 - hierarchical Kelvin–Helmholtz instability with wavelength doubling
 - estimation of the interface fractal dimension
 
-## Build & Execution
+## build and execution
 
 ### Prerequisites
 - C++17 compliant compiler (`g++` or `clang++`)
@@ -40,13 +40,19 @@ Simulation of axisymmetric, buoyant vortex ring formation from an initial, unifo
 - OpenMP
 - MPI implementation (e.g., OpenMPI or MPICH)
 
-### Building
+### building
 ```bash
 mkdir -p build results
 cd build
 cmake ..
 make -j
 ```
+### running locally
+```bash
+export OMP_NUM_THREADS=4
+mpirun -np 2 ./vortRing
+```
+
 
 ## references
 
