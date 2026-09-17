@@ -36,7 +36,7 @@ add_executable(vortsheet
     src/Params.hpp
     src/Graph.cpp
     src/Graph.hpp
-    src/Integrals.cpp
+    src/Characteristics.cpp
     src/RungeKutta4.cpp
     src/Surgery.cpp
     src/Sync.cpp

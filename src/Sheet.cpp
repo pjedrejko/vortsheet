@@ -90,8 +90,8 @@ void Sheet::produceCirculation(const Nodes& x, Nodes& dxdt){
 void Sheet::toFile(){
     logg.formPrint(1, "writing sheet {").print("\n");
 
-    int stp = integrals.step;
-    integrals.toFile();
+    int stp = characteristics.step;
+    characteristics.toFile();
     x.toFile(stp, "x");
     G.toFile(stp);
     logg.formPrint(-1, "}\n");
@@ -100,7 +100,7 @@ void Sheet::toFile(){
 void Sheet::fromFile(int stp){
     logg.formPrint(1, "reading sheet from step %d {", stp).print("\n");
 
-    integrals.fromFile(stp);
+    characteristics.fromFile(stp);
     x.fromFile(stp, "x");
     G.fromFile(stp);
     logg.formPrint(-1, "}\n");

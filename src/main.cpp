@@ -19,15 +19,15 @@ int main(int argc, char** argv) {
     for(int stp = 0; stp < 90; stp++){
         if(Parallel::isRoot()){
             std::printf("%s\n", std::string(80, '=').c_str());
-            sheet.integrals.compute();
-            sheet.integrals.info();
+            sheet.characteristics.compute();
+            sheet.characteristics.info();
             sheet.toFile();
         }
         
-        sheet.rk4.step(sheet.integrals.dt);
+        sheet.rk4.step(sheet.characteristics.dt);
         
         if(Parallel::isRoot()){
-            sheet.u.toFile(sheet.integrals.step, "u");
+            sheet.u.toFile(sheet.characteristics.step, "u");
             sheet.G.refine();
             sheet.T.surgery.apply();
         }

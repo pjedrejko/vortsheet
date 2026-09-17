@@ -4,6 +4,7 @@ Makefile
 results/
 build/
 files/
+description/
 
 files/
 .vscode/

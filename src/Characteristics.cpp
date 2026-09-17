@@ -3,7 +3,7 @@
 #include<string>
 #include"Utilities.hpp"
 
-void Sheet::Integrals::compute(){
+void Sheet::Characteristics::compute(){
     time           += dt;
     step           += 1;
     parameterLength = computeParameterLength();
@@ -16,11 +16,11 @@ void Sheet::Integrals::compute(){
     //time           += dt;
 }
 
-double Sheet::Integrals::computeAxisThickness(){
+double Sheet::Characteristics::computeAxisThickness(){
     return sheet.x.z[sheet.G.topAxis] - sheet.x.z[sheet.G.bottomAxis];
 }
 
-double Sheet::Integrals::computeParameterLength(){
+double Sheet::Characteristics::computeParameterLength(){
     double len = 0.0;
     const int n = sheet.x.size();
 
@@ -31,7 +31,7 @@ double Sheet::Integrals::computeParameterLength(){
 }
 
 
-double Sheet::Integrals::computePhysicalLength(){
+double Sheet::Characteristics::computePhysicalLength(){
     double len = 0.0;
 
     for(const Segment& s: sheet.G.seg){
@@ -43,7 +43,7 @@ double Sheet::Integrals::computePhysicalLength(){
     return len;
 }
 
-double Sheet::Integrals::computeCirculation(){
+double Sheet::Characteristics::computeCirculation(){
     double circ = 0.0;
     const int n = sheet.x.size();
 
@@ -53,7 +53,7 @@ double Sheet::Integrals::computeCirculation(){
     return circ;
 }
 
-double Sheet::Integrals::computeImpulse(){
+double Sheet::Characteristics::computeImpulse(){
     double imp = 0.0;
     const int n = sheet.x.size();
 
@@ -64,7 +64,7 @@ double Sheet::Integrals::computeImpulse(){
     return imp;
 }
 
-double Sheet::Integrals::computeVolume(){
+double Sheet::Characteristics::computeVolume(){
     double vol = 0.0;
     for(const Segment& s: sheet.G.seg){
         if( !s.interfacial ) continue;
@@ -76,7 +76,7 @@ double Sheet::Integrals::computeVolume(){
     return vol;
 }
 
-double Sheet::Integrals::computeTimeStep(double circulation, double axisThickness){
+double Sheet::Characteristics::computeTimeStep(double circulation, double axisThickness){
     double dt1 = Params::kt1 * std::abs(circulation) / axisThickness;
     double dt2 = Params::kt2 * Params::delta / std::abs(circulation);
 
@@ -84,16 +84,16 @@ double Sheet::Integrals::computeTimeStep(double circulation, double axisThicknes
     //return 0.02;
 }
 
-void Sheet::Integrals::toFile(){
+void Sheet::Characteristics::toFile(){
 
-    const char* filepath = "results/integrals";
-    logg.formPrint("writing to results/integrals... ");
+    const char* filepath = "results/characteristics";
+    logg.formPrint("writing to results/characteristics... ");
 
     static bool firstCall = true;
 
     FILE* f = std::fopen(filepath, "a");
     if (!f)
-        throw std::runtime_error("Could not open file: results/integrals");
+        throw std::runtime_error("Could not open file: results/characteristics");
 
     int colWidth = 25;
     if (firstCall) {
@@ -124,7 +124,7 @@ void Sheet::Integrals::toFile(){
     logg.print("done.\n");
 }
 
-void Sheet::Integrals::info() {
+void Sheet::Characteristics::info() {
     logg.print("| step:          %8d |\n",     step);
     logg.print("| time:          %8.5f |\n",   time);
     logg.print("| nodes:         %8d |\n",     int(sheet.x.r.size()));
@@ -136,7 +136,7 @@ void Sheet::Integrals::info() {
     logg.print("| volume:        %8.5f |\n\n", volume);
 }
 
-void Sheet::Integrals::fromFile(int stp) {
+void Sheet::Characteristics::fromFile(int stp) {
     const char* filepath = "results/integrals";
 
     logg.formPrint(1, "reading step %d from results/integrals ", stp);

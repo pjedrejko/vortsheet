@@ -30,7 +30,7 @@ public:
     };
     RungeKutta4 rk4;
 
-    class Integrals{
+    class Characteristics{
         const Sheet& sheet;
         public:
         int    step            = 0; 
@@ -43,7 +43,7 @@ public:
         double parameterLength = 0.0;
         double physicalLength  = 0.0;
    
-        Integrals(const Sheet& parent): sheet{parent}{};
+        Characteristics(const Sheet& parent): sheet{parent}{};
         void compute();
         void toFile();
         void fromFile(int stp);
@@ -57,14 +57,11 @@ public:
         double computePhysicalLength();
         double computeTimeStep(double circulation, double axisThickness);
     }; 
-    Integrals integrals;
+    Characteristics characteristics;
 
     class Sync{
         public:
         Sheet& sheet;
-        //int iRank =  -1;
-        //int nRanks = -1;
-        //int nThreads = -1;
 
         //leaves range (in the Tree)
         LeafIdx l0 = -1;
@@ -78,16 +75,13 @@ public:
     };
     Sync parallel;
 
-    Sheet(): G(x, W), T(G), rk4(*this), integrals(*this), parallel(*this){};
+    Sheet(): G(x, W), T(G), rk4(*this), characteristics(*this), parallel(*this){};
     void clear();
 
     void initializeRing(double totalCirculation);
 
     void fromFile(int stp);
     void toFile();
-
-    void brodcastNodes();
-    void reduceVelocities();
 
     void computeVelocities(Nodes& X, Nodes& U);
     void produceCirculation(const Nodes& x, Nodes& dxdt);
